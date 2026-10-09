@@ -2,7 +2,7 @@
 
 ## Scope
 
-Create a **buyer-only** capture path for `radurealtor.com` that is safe to review before publication. It is deliberately separate from the active CityBlast Gmail router.
+Create a **buyer-only**, campaign-direct capture path for `radurealtor.com`. It is deliberately separate from the active CityBlast Gmail router and is not linked from the website homepage.
 
 The implementation includes:
 
@@ -21,7 +21,7 @@ The implementation includes:
 - The launch form does not request consent for general marketing or newsletter emails; every submission is recorded as `Email updates: no`.
 - Form sends only after a configured gateway endpoint and CAPTCHA site key are present.
 - A visible, in-context success or error panel appears immediately above the submit button. A successful browser handoff confirms that the request was sent for processing; CAPTCHA expiry tells the visitor to check the box again.
-- Default commit is not public-launch ready: the page has `noindex` and is not linked from the existing homepage until publication is explicitly authorized. The buyer page uses the approved two-line identity block — “Radu G. Muresan | Independent Real Estate Broker” paired with “Illinois Licensed Real Estate Managing Broker · Lic. #471.012113” — without a street address or a marketing-email opt-in, and its Privacy Notice uses approved reasonable-need retention wording.
+- The campaign-direct page is live at `/buyer-planning.html` for approved CityBlast, QR, and email links. It remains `noindex` and unlinked from the homepage. The buyer page uses the approved two-line identity block — “Radu G. Muresan | Independent Real Estate Broker” paired with “Illinois Licensed Real Estate Managing Broker · Lic. #471.012113” — without a street address or a marketing-email opt-in, and its Privacy Notice uses approved reasonable-need retention wording.
 
 ## Architecture
 
@@ -61,4 +61,4 @@ The client never receives the Top Producer intake address or CAPTCHA secret. Gat
 
 ## Constraints
 
-The deployed gateway and Google reCAPTCHA configuration have passed controlled end-to-end testing. On October 9, 2026, the source/type mapping and the seven-task response plan were also verified; the test contact and its generated tasks were deleted. IDFPR also verifies Radu G. Muresan as an active Licensed Real Estate Managing Broker (License #471.012113) through April 30, 2027. The approved identity block uses “Independent Real Estate Broker” only as a descriptor paired with the verified managing-broker credential. No street address is to be displayed and no marketing-email opt-in is included. The Privacy Notice uses approved reasonable-need retention wording and includes a five-year transaction-record statement. This branch must **not** be merged or linked from campaign CTAs until publication is explicitly authorized. See `Compliance_Release_Check.md` for the specific publication decisions.
+The deployed gateway and Google reCAPTCHA configuration have passed controlled end-to-end testing. On October 9, 2026, two live-domain test contacts confirmed source/type mapping, UTM intake, and the on-page submission message; both were deleted. The Website Buyer response rule now uses the verified shared seven-task manual plan, `CityBlast Buyer — 14-Day Personal Follow-Up`; the unused blank Website Buyer plan is inactive. IDFPR also verifies Radu G. Muresan as an active Licensed Real Estate Managing Broker (License #471.012113) through April 30, 2027. The approved identity block uses “Independent Real Estate Broker” only as a descriptor paired with the verified managing-broker credential. No street address is displayed and no marketing-email opt-in is included. The Privacy Notice uses approved reasonable-need retention wording and includes a five-year transaction-record statement. Do not remove `noindex` or add a homepage link without separate authorization. See `Compliance_Release_Check.md` for the publication decisions.

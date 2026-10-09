@@ -11,7 +11,7 @@ This source is intentionally separate from the active **CityBlast to Top Produce
 3. Have the Top Producer buyer source rule ready to match:
    - Source: `Website - Buyer`
    - Contact type: `Buyer`
-   - Plan: `Website Buyer — 14-Day Personal Follow-Up`
+   - Plan: `CityBlast Buyer — 14-Day Personal Follow-Up` (the verified shared seven-task manual plan)
 
 ## Apps Script setup
 
@@ -32,9 +32,9 @@ This source is intentionally separate from the active **CityBlast to Top Produce
    - Source: `Website - Buyer`
    - Type: `Buyer`
    - buyer planning details and UTM context in the note
-4. Separately confirm the `Website Buyer — 14-Day Personal Follow-Up` plan attaches after its Top Producer response rule is enabled; the source/type intake test does not automatically prove plan attachment.
+4. Separately confirm the `CityBlast Buyer — 14-Day Personal Follow-Up` plan is selected in the `Website Buyer - 14-Day Response` rule; the source/type intake test does not automatically prove plan attachment.
 5. Delete the controlled test contact and all generated tasks.
-6. Only then remove the `noindex` tag, link the page from relevant CTAs, and merge/publish.
+6. The campaign-direct page may use approved CityBlast, QR, and email links. Remove `noindex` or add a homepage link only after separate approval.
 
 ## Safety notes
 
