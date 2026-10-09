@@ -20,6 +20,7 @@ The implementation includes:
 - SMS is **not enabled**: no SMS consent field or automated messaging behavior is included.
 - The launch form does not request consent for general marketing or newsletter emails; every submission is recorded as `Email updates: no`.
 - Form sends only after a configured gateway endpoint and CAPTCHA site key are present.
+- A visible, in-context success or error panel appears immediately above the submit button. A successful browser handoff confirms that the request was sent for processing; CAPTCHA expiry tells the visitor to check the box again.
 - Default commit is not public-launch ready: the page has `noindex` and is not linked from the existing homepage until publication is explicitly authorized. The buyer page uses the approved two-line identity block — “Radu G. Muresan | Independent Real Estate Broker” paired with “Illinois Licensed Real Estate Managing Broker · Lic. #471.012113” — without a street address or a marketing-email opt-in, and its Privacy Notice uses approved reasonable-need retention wording.
 
 ## Architecture

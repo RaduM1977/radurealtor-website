@@ -16,12 +16,16 @@
 
   function showStatus(message, isError) {
     status.textContent = message;
-    status.className = "gateway-status is-visible" + (isError ? " is-error" : "");
+    status.className = "gateway-status is-visible" + (isError ? " is-error" : " is-success");
+    status.setAttribute("tabindex", "-1");
+    if (status.scrollIntoView) status.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (status.focus) status.focus({ preventScroll: true });
   }
 
   function clearStatus() {
     status.textContent = "";
     status.className = "gateway-status";
+    status.removeAttribute("tabindex");
   }
 
   function setFieldError(field, invalid) {
@@ -124,7 +128,7 @@
     widgetId = window.grecaptcha.render("recaptcha-widget", {
       sitekey: config.recaptchaSiteKey,
       callback: function (token) { recaptchaToken = token; clearStatus(); },
-      "expired-callback": function () { recaptchaToken = ""; },
+      "expired-callback": function () { recaptchaToken = ""; showStatus("Spam protection expired. Please check the box again before submitting.", true); },
       "error-callback": function () { recaptchaToken = ""; showStatus("Spam protection could not load. Please try again later or email Radu directly.", true); }
     });
     return true;
@@ -182,7 +186,7 @@
       form.reset();
       updatePhoneRequirement();
       resetRecaptcha();
-      showStatus("Thank you — your request has been received. Radu will follow up using your selected contact method.", false);
+      showStatus("Thank you — your buyer-planning request was sent. Radu will follow up using your selected contact method.", false);
       submitButton.textContent = "Request Buyer Planning Help";
       submitButton.disabled = false;
     }).catch(function () {

@@ -1,6 +1,6 @@
 # Buyer Lead Bridge Delivery Checklist
 
-- [x] **Buyer landing page** — `buyer-planning.html` provides the validated form experience, conditional 10-digit phone requirement, existing brand mark, optional email updates consent, privacy acknowledgement, and no SMS automation/consent field.
+- [x] **Buyer landing page** — `buyer-planning.html` provides the validated form experience, conditional 10-digit phone requirement, existing brand mark, request-only email policy, privacy acknowledgement, no SMS automation/consent field, and in-context submission or CAPTCHA feedback beside the submit button.
 - [ ] **Safe pre-launch configuration** — Keep the page unlinked and `noindex` until publication is explicitly authorized. The deployed gateway, reCAPTCHA site key, verified managing-broker disclosure, request-only email policy, and Privacy Notice retention wording are configured.
 - [x] **Website Lead Gateway** — The separate Apps Script Web App validated CAPTCHA, rejected invalid payloads during safeguard tests, and created `Website - Buyer` / `Buyer` Top Producer records without exposing the CRM intake address to the browser.
 - [x] **Top Producer workflow** — The `Website Buyer - 14-Day Response` rule now maps `Website - Buyer` / `Buyer` to the manual `Website Buyer — 14-Day Personal Follow-Up` plan. No automated outbound messages are enabled.
