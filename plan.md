@@ -18,9 +18,9 @@ The implementation includes:
 - Email and name required; phone optional unless visitor selects phone/text as their preferred contact method.
 - Phone input uses an explicit 10-digit U.S. example, formats the entry as the visitor types, and becomes required only when phone/text is selected.
 - SMS is **not enabled**: no SMS consent field or automated messaging behavior is included.
-- Email updates remain optional and unchecked.
+- The launch form does not request consent for general marketing or newsletter emails; every submission is recorded as `Email updates: no`.
 - Form sends only after a configured gateway endpoint and CAPTCHA site key are present.
-- Default commit is not public-launch ready: the page has `noindex` and is not linked from the existing homepage until the brokerage/privacy details and gateway deployment are complete.
+- Default commit is not public-launch ready: the page has `noindex` and is not linked from the existing homepage until the Privacy Notice and publication authorization are complete. The buyer page will identify the verified managing broker without showing a street address or a marketing-email opt-in.
 
 ## Architecture
 
@@ -60,4 +60,4 @@ The client never receives the Top Producer intake address or CAPTCHA secret. Gat
 
 ## Constraints
 
-The deployed gateway and Google reCAPTCHA configuration have passed controlled end-to-end testing. On October 9, 2026, the source/type mapping and the seven-task response plan were also verified; the test contact and its generated tasks were deleted. This branch must **not** be merged or linked from campaign CTAs until the sponsoring-broker identity, approved office or mailing address, final Privacy Notice details, and opt-out process are confirmed. See `Compliance_Release_Check.md` for the specific publication decisions.
+The deployed gateway and Google reCAPTCHA configuration have passed controlled end-to-end testing. On October 9, 2026, the source/type mapping and the seven-task response plan were also verified; the test contact and its generated tasks were deleted. IDFPR also verifies Radu G. Muresan as an active Licensed Real Estate Managing Broker (License #471.012113) through April 30, 2027. No street address is to be displayed and no marketing-email opt-in is included. This branch must **not** be merged or linked from campaign CTAs until the final Privacy Notice and publication authorization are confirmed. See `Compliance_Release_Check.md` for the specific publication decisions.

@@ -99,7 +99,7 @@
       financing: form.elements.financing.value,
       budget: form.elements.budget.value.trim(),
       message: form.elements.message.value.trim(),
-      emailUpdates: form.elements.emailUpdates.checked ? "yes" : "no",
+      emailUpdates: "no",
       honeypot: form.elements.website.value.trim(),
       recaptchaToken: recaptchaToken,
       source: config.leadSource,
