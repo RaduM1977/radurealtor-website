@@ -8,7 +8,7 @@ The buyer form is protected with Google reCAPTCHA and a honeypot, passes through
 
 ## Required launch decisions
 
-1. **Broker identity — verified.** The official IDFPR record identifies **Radu G. Muresan** as the active **Illinois Licensed Real Estate Managing Broker** (License #471.012113) through April 30, 2027. The record lists Radu G. Muresan as Managing Broker and no external sponsor or DBA/AKA.
+1. **Broker identity — verified.** The official IDFPR record identifies **Radu G. Muresan** as the active **Illinois Licensed Real Estate Managing Broker** (License #471.012113) through April 30, 2027. The record lists Radu G. Muresan as Managing Broker and no external sponsor or DBA/AKA. The approved display uses **“Independent Real Estate Broker”** only as a descriptor paired with the verified managing-broker credential; it does not claim Designated Managing Broker status.
 2. **Street address — confirmed not for publication.** Do not display `5030 N Marine Dr` or any other street address on the buyer page or Privacy Notice. The public form can remain city-neutral/Chicagoland-focused.
 3. **Privacy Notice — confirmed.** The notice uses reasonable-need retention wording and states that transaction records are retained for at least five years under Illinois recordkeeping rules. It names Google reCAPTCHA, Google Apps Script, and Top Producer CRM, and publishes email as the privacy-contact method without a street address.
 4. **Marketing email — confirmed not for launch.** The optional email-tips checkbox has been removed. The form creates a buyer-planning request only and records `Email updates: no`. No automated email or SMS campaign is activated by this bridge.
