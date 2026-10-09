@@ -1,0 +1,76 @@
+:root {
+  --navy: #1b2a4a;
+  --navy-deep: #111d35;
+  --gold: #c9a84c;
+  --paper: #f8f8f6;
+  --ink: #272722;
+  --muted: #5e5e56;
+  --line: rgba(27, 42, 74, 0.18);
+  --danger: #9d2537;
+}
+
+* { box-sizing: border-box; }
+html { color: var(--ink); background: var(--paper); font-family: "Source Sans 3", system-ui, sans-serif; }
+body { margin: 0; min-width: 320px; }
+a { color: inherit; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid rgba(201, 168, 76, 0.75); outline-offset: 3px; }
+
+.skip-link { position: absolute; left: 1rem; top: -4rem; z-index: 20; padding: .7rem 1rem; background: var(--gold); color: var(--navy-deep); font-weight: 700; }
+.skip-link:focus { top: 1rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+.page-shell { min-height: 100vh; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(420px, .95fr); }
+.intro-panel { background: var(--navy); color: #fff; padding: clamp(2rem, 6vw, 6rem) clamp(1.5rem, 7vw, 7rem); position: relative; overflow: hidden; }
+.intro-panel::after { content: ""; position: absolute; pointer-events: none; right: -16rem; bottom: -18rem; width: 42rem; height: 42rem; border: 1px solid rgba(201, 168, 76, .22); border-radius: 50%; box-shadow: 0 0 0 4rem rgba(201, 168, 76, .04), 0 0 0 8rem rgba(201, 168, 76, .03); }
+.wordmark { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: .75rem; color: #fff; text-decoration: none; font-size: 1rem; font-weight: 700; letter-spacing: .02em; }
+.wordmark small { display: block; color: rgba(255, 255, 255, .72); font-size: .72rem; font-weight: 400; letter-spacing: .04em; margin-top: .12rem; }
+.wordmark .brand-descriptor { color: rgba(255, 255, 255, .92); font-size: .68rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+.wordmark .credential { font-size: .62rem; letter-spacing: .035em; }
+.wordmark-logo { display: block; flex: 0 0 auto; width: 2.8rem; height: 3.1rem; object-fit: contain; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .25)); }
+.eyebrow { position: relative; z-index: 1; margin: clamp(3rem, 10vh, 8rem) 0 1rem; color: var(--gold); font-size: .76rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+h1, h2 { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; }
+h1 { position: relative; z-index: 1; max-width: 10ch; font-size: clamp(3.3rem, 6vw, 6rem); line-height: .98; letter-spacing: -.035em; margin: 0; }
+.lede { position: relative; z-index: 1; max-width: 38rem; color: rgba(255, 255, 255, .82); font-size: 1.18rem; line-height: 1.65; margin: 1.75rem 0 2rem; }
+.gold-rule { position: relative; z-index: 1; height: 2px; width: 7rem; background: var(--gold); margin: 2rem 0 2.4rem; }
+.value-list { position: relative; z-index: 1; display: grid; gap: 1.4rem; max-width: 38rem; }
+.value-list article { display: grid; grid-template-columns: 2.15rem 1fr; gap: .9rem; }
+.value-number { color: var(--gold); font-size: .72rem; font-weight: 700; letter-spacing: .08em; padding-top: .3rem; }
+.value-list h2 { font-family: "Source Sans 3", system-ui, sans-serif; font-size: 1rem; font-weight: 700; margin: 0 0 .18rem; }
+.value-list p { color: rgba(255, 255, 255, .7); line-height: 1.45; margin: 0; }
+.contact-fallback { position: relative; z-index: 1; margin: 3rem 0 0; color: rgba(255, 255, 255, .72); font-size: .94rem; }
+.contact-fallback a { color: #fff; text-underline-offset: 4px; }
+
+.form-panel { background: #fff; padding: clamp(2rem, 6vw, 5.5rem) clamp(1.5rem, 5vw, 5rem); }
+.form-heading { max-width: 38rem; }
+.form-heading .eyebrow { color: var(--gold); margin: 0 0 .8rem; }
+.form-heading h2 { color: var(--navy); font-size: clamp(2.2rem, 4vw, 3.5rem); line-height: 1.04; letter-spacing: -.025em; margin: 0; }
+.form-heading > p:last-child { color: var(--muted); margin: 1rem 0 2rem; }
+.gateway-status { display: none; margin: 0 0 1.25rem; padding: .9rem 1rem; border-left: 3px solid var(--gold); background: #f7f4eb; color: var(--navy); font-size: .94rem; line-height: 1.45; }
+.gateway-status.is-visible { display: block; }
+.gateway-status.is-error { border-color: var(--danger); background: #fdf0f1; color: #6d1725; }
+form { max-width: 42rem; }
+.form-grid { display: grid; gap: 1rem; }
+.two-column { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.field-group { margin: 0 0 1.1rem; }
+label { display: block; color: var(--navy); font-size: .92rem; font-weight: 700; margin: 0 0 .45rem; }
+.phone-contact-grid .field-group > label { display: flex; align-items: flex-start; line-height: 1.35; min-height: 2.7em; }
+.optional { color: var(--muted); font-weight: 400; }
+input, select, textarea { width: 100%; border: 1px solid var(--line); border-radius: 0; background: #fff; color: var(--ink); font: inherit; line-height: 1.4; padding: .76rem .85rem; }
+input:hover, select:hover, textarea:hover { border-color: rgba(27, 42, 74, .45); }
+input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--danger); background: #fff8f8; }
+textarea { min-height: 8.4rem; resize: vertical; }
+.field-help { color: var(--muted); font-size: .8rem; line-height: 1.4; margin: .35rem 0 0; }
+.checkbox-row { align-items: flex-start; display: grid; grid-template-columns: 1.15rem 1fr; gap: .65rem; color: var(--ink); font-size: .9rem; font-weight: 400; line-height: 1.45; margin: .45rem 0 1.35rem; }
+.checkbox-row input { accent-color: var(--navy); height: 1.1rem; margin: .18rem 0 0; }
+.privacy-copy, .form-footnote { color: var(--muted); font-size: .84rem; line-height: 1.5; }
+.privacy-copy { margin: 0 0 1.35rem; }
+.privacy-copy a { color: var(--navy); text-underline-offset: 3px; }
+#recaptcha-widget { margin: 0 0 1.15rem; min-height: 0; }
+.submit-button { width: 100%; border: 1px solid var(--navy); background: var(--navy); color: #fff; cursor: pointer; font: inherit; font-size: 1rem; font-weight: 700; padding: 1rem 1.2rem; transition: background .16s ease, transform .16s ease; }
+.submit-button:hover:not(:disabled) { background: var(--navy-deep); transform: translateY(-1px); }
+.submit-button:disabled { cursor: not-allowed; opacity: .58; }
+.form-footnote { margin: 1rem 0 0; text-align: center; }
+
+@media (max-width: 900px) { .page-shell { grid-template-columns: 1fr; } .intro-panel { padding-bottom: 3rem; } .eyebrow { margin-top: 3rem; } h1 { max-width: 14ch; } .intro-panel::after { right: -20rem; bottom: -30rem; } }
+@media (max-width: 560px) { .two-column { grid-template-columns: 1fr; gap: 0; } .form-panel, .intro-panel { padding-left: 1.25rem; padding-right: 1.25rem; } h1 { font-size: clamp(3rem, 16vw, 4.6rem); } .form-heading h2 { font-size: 2.45rem; } }
