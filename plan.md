@@ -60,4 +60,4 @@ The client never receives the Top Producer intake address or CAPTCHA secret. Gat
 
 ## Constraints
 
-The brokerage identity, mailing address, final Privacy Notice details, and public gateway/CAPTCHA values are not yet confirmed. The source/type controlled CRM test passed on October 8, 2026 and its test contact was deleted. This branch must **not** be merged or linked from campaign CTAs until the remaining disclosures are complete and the response-rule/task-plan behavior is separately confirmed.
+The deployed gateway and Google reCAPTCHA configuration have passed controlled end-to-end testing. On October 9, 2026, the source/type mapping and the seven-task response plan were also verified; the test contact and its generated tasks were deleted. This branch must **not** be merged or linked from campaign CTAs until the sponsoring-broker identity, approved office or mailing address, final Privacy Notice details, and opt-out process are confirmed. See `Compliance_Release_Check.md` for the specific publication decisions.
