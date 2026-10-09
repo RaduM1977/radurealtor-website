@@ -4,10 +4,10 @@
  * Separate Google Apps Script Web App for buyer form submissions.
  * Configure Script Properties before deployment:
  *   TOP_PRODUCER_LEAD_EMAIL  (the existing @myleads.io intake address)
- *   TURNSTILE_SECRET_KEY     (server-side secret; never place in website files)
+ *   RECAPTCHA_SECRET_KEY     (server-side secret; never place in website files)
  *
  * Deployment: Execute as the Google account owner; access: Anyone.
- * Turnstile must be configured to allow the live website domain.
+ * Google reCAPTCHA must be configured to allow the live website domain.
  */
 
 var WEBSITE_SOURCE = 'Website - Buyer';
@@ -27,7 +27,7 @@ function doPost(e) {
       return response_({ ok: false, error: 'Please wait before submitting another request.' });
     }
 
-    verifyTurnstile_(payload.turnstileToken);
+    verifyRecaptcha_(payload.recaptchaToken);
     sendLeadToTopProducer_(payload);
     return response_({ ok: true });
   } catch (error) {
@@ -60,12 +60,12 @@ function validatePayload_(lead) {
   if (clean_(lead.source, 100) !== WEBSITE_SOURCE || clean_(lead.type, 20) !== WEBSITE_LEAD_TYPE) {
     throw new Error('Unexpected lead source');
   }
-  if (!clean_(lead.turnstileToken, 4096)) throw new Error('Missing CAPTCHA token');
+  if (!clean_(lead.recaptchaToken, 4096)) throw new Error('Missing CAPTCHA token');
 }
 
-function verifyTurnstile_(token) {
-  var secret = getRequiredProperty_('TURNSTILE_SECRET_KEY');
-  var request = UrlFetchApp.fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+function verifyRecaptcha_(token) {
+  var secret = getRequiredProperty_('RECAPTCHA_SECRET_KEY');
+  var request = UrlFetchApp.fetch('https://www.google.com/recaptcha/api/siteverify', {
     method: 'post',
     payload: { secret: secret, response: token },
     muteHttpExceptions: true

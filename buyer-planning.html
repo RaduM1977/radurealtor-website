@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/lead-form.css">
   <script src="assets/lead-form-config.js" defer></script>
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer></script>
   <script src="assets/lead-form.js" defer></script>
 </head>
 <body>
@@ -19,7 +19,7 @@
   <main class="page-shell">
     <section class="intro-panel" aria-labelledby="page-title">
       <a class="wordmark" href="/" aria-label="Radu G. Muresan home">
-        <span class="wordmark-initials" aria-hidden="true">RM</span>
+        <img class="wordmark-logo" src="assets/media/radu-muresan-mark.png" width="44" height="49" alt="" aria-hidden="true" decoding="async">
         <span>Radu G. Muresan <small>Chicago Real Estate Broker</small></span>
       </a>
       <p class="eyebrow">Buyer guidance • Chicagoland</p>
@@ -70,8 +70,9 @@
 
         <div class="form-grid two-column">
           <div class="field-group">
-            <label for="phone">Phone number <span class="optional">(optional)</span></label>
-            <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="30" inputmode="tel">
+            <label id="phone-label" for="phone">Phone number <span id="phone-requirement" class="optional">(optional unless you choose phone or text)</span></label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="18" inputmode="tel" placeholder="(312) 555-0123" aria-describedby="phone-help">
+            <p id="phone-help" class="field-help">Use a 10-digit U.S. number, for example (312) 555-0123. It is only required when you choose phone or text.</p>
           </div>
           <div class="field-group">
             <label for="contact-method">Preferred contact method <span aria-hidden="true">*</span></label>
@@ -133,7 +134,7 @@
 
         <p class="privacy-copy">By submitting, you ask Radu G. Muresan to respond to your request using the contact information you provide. Review the <a href="privacy.html">Privacy Notice</a> to learn how your information is used.</p>
 
-        <div id="turnstile-widget" aria-label="Spam protection"></div>
+        <div id="recaptcha-widget" aria-label="Spam protection"></div>
         <button class="submit-button" type="submit" id="submit-button">Request Buyer Planning Help</button>
         <p class="form-footnote">A request for guidance does not create a client relationship or obligate you to buy a home.</p>
       </form>

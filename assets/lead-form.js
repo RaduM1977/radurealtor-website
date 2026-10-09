@@ -5,8 +5,12 @@
   var form = document.getElementById("buyer-form");
   var status = document.getElementById("gateway-status");
   var submitButton = document.getElementById("submit-button");
-  var turnstileToken = "";
+  var recaptchaToken = "";
   var widgetId = null;
+  var phone = form && form.elements.phone;
+  var contactMethod = form && form.elements.contactMethod;
+  var phoneRequirement = document.getElementById("phone-requirement");
+  var phoneHelp = document.getElementById("phone-help");
 
   if (!form || !status || !submitButton) return;
 
@@ -34,11 +38,39 @@
     };
   }
 
+  function phoneDigits(value) {
+    var digits = String(value || "").replace(/\D/g, "");
+    return digits.length === 11 && digits.charAt(0) === "1" ? digits.slice(1) : digits;
+  }
+
+  function isPhoneRequired() {
+    return contactMethod.value === "phone" || contactMethod.value === "text";
+  }
+
+  function isValidPhone(value) {
+    return phoneDigits(value).length === 10;
+  }
+
+  function formatPhone(value) {
+    var digits = phoneDigits(value).slice(0, 10);
+    if (digits.length < 4) return digits;
+    if (digits.length < 7) return "(" + digits.slice(0, 3) + ") " + digits.slice(3);
+    return "(" + digits.slice(0, 3) + ") " + digits.slice(3, 6) + "-" + digits.slice(6);
+  }
+
+  function updatePhoneRequirement() {
+    var required = isPhoneRequired();
+    phone.required = required;
+    phone.setAttribute("aria-required", required ? "true" : "false");
+    phoneRequirement.textContent = required ? "(required for your selected contact method)" : "(optional unless you choose phone or text)";
+    phoneHelp.textContent = required
+      ? "Enter a 10-digit U.S. number, for example (312) 555-0123."
+      : "Use a 10-digit U.S. number, for example (312) 555-0123. It is only required when you choose phone or text.";
+  }
+
   function validateForm() {
     var name = form.elements.name;
     var email = form.elements.email;
-    var contactMethod = form.elements.contactMethod;
-    var phone = form.elements.phone;
     var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     var valid = true;
 
@@ -46,7 +78,10 @@
     if (!name.value.trim()) { setFieldError(name, true); valid = false; }
     if (!emailPattern.test(email.value.trim())) { setFieldError(email, true); valid = false; }
     if (!contactMethod.value) { setFieldError(contactMethod, true); valid = false; }
-    if ((contactMethod.value === "phone" || contactMethod.value === "text") && !phone.value.trim()) {
+    if (phone.value.trim() && !isValidPhone(phone.value)) {
+      setFieldError(phone, true); valid = false;
+    }
+    if (isPhoneRequired() && !isValidPhone(phone.value)) {
       setFieldError(phone, true); valid = false;
     }
     return valid;
@@ -66,7 +101,7 @@
       message: form.elements.message.value.trim(),
       emailUpdates: form.elements.emailUpdates.checked ? "yes" : "no",
       honeypot: form.elements.website.value.trim(),
-      turnstileToken: turnstileToken,
+      recaptchaToken: recaptchaToken,
       source: config.leadSource,
       type: config.leadType,
       landingPage: window.location.pathname,
@@ -79,49 +114,57 @@
     };
   }
 
-  function resetTurnstile() {
-    turnstileToken = "";
-    if (widgetId !== null && window.turnstile) window.turnstile.reset(widgetId);
+  function resetRecaptcha() {
+    recaptchaToken = "";
+    if (widgetId !== null && window.grecaptcha) window.grecaptcha.reset(widgetId);
   }
 
-  function renderTurnstile() {
-    if (!config.turnstileSiteKey || !window.turnstile) return false;
-    widgetId = window.turnstile.render("#turnstile-widget", {
-      sitekey: config.turnstileSiteKey,
-      callback: function (token) { turnstileToken = token; clearStatus(); },
-      "expired-callback": function () { turnstileToken = ""; },
-      "error-callback": function () { turnstileToken = ""; showStatus("Spam protection could not load. Please try again later or email Radu directly.", true); }
+  function renderRecaptcha() {
+    if (!config.recaptchaSiteKey || !window.grecaptcha) return false;
+    widgetId = window.grecaptcha.render("recaptcha-widget", {
+      sitekey: config.recaptchaSiteKey,
+      callback: function (token) { recaptchaToken = token; clearStatus(); },
+      "expired-callback": function () { recaptchaToken = ""; },
+      "error-callback": function () { recaptchaToken = ""; showStatus("Spam protection could not load. Please try again later or email Radu directly.", true); }
     });
     return true;
   }
 
-  function waitForTurnstile(attempt) {
-    if (renderTurnstile()) return;
-    if (attempt < 30 && config.turnstileSiteKey) {
-      window.setTimeout(function () { waitForTurnstile(attempt + 1); }, 250);
+  function waitForRecaptcha(attempt) {
+    if (renderRecaptcha()) return;
+    if (attempt < 30 && config.recaptchaSiteKey) {
+      window.setTimeout(function () { waitForRecaptcha(attempt + 1); }, 250);
     }
   }
 
-  if (!config.endpoint || !config.turnstileSiteKey) {
+  if (!config.endpoint || !config.recaptchaSiteKey) {
     submitButton.disabled = true;
     showStatus("The secure request form is being prepared. Please email Radu directly at radu.realtor@yahoo.com.", false);
   } else {
-    waitForTurnstile(0);
+    waitForRecaptcha(0);
   }
+
+  contactMethod.addEventListener("change", updatePhoneRequirement);
+  phone.addEventListener("input", function () {
+    var cursorAtEnd = phone.selectionStart === phone.value.length;
+    phone.value = formatPhone(phone.value);
+    if (cursorAtEnd) phone.setSelectionRange(phone.value.length, phone.value.length);
+  });
+  updatePhoneRequirement();
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
     clearStatus();
 
-    if (!config.endpoint || !config.turnstileSiteKey) {
+    if (!config.endpoint || !config.recaptchaSiteKey) {
       showStatus("The secure request form is not active yet. Please email Radu directly at radu.realtor@yahoo.com.", true);
       return;
     }
     if (!validateForm()) {
-      showStatus("Please complete the required fields and provide a phone number if you selected phone or text.", true);
+      showStatus("Please complete the required fields. Phone or text replies require a valid 10-digit U.S. phone number.", true);
       return;
     }
-    if (!turnstileToken) {
+    if (!recaptchaToken) {
       showStatus("Please complete the spam-protection check before submitting.", true);
       return;
     }
@@ -137,12 +180,13 @@
       keepalive: true
     }).then(function () {
       form.reset();
-      resetTurnstile();
+      updatePhoneRequirement();
+      resetRecaptcha();
       showStatus("Thank you — your request has been received. Radu will follow up using your selected contact method.", false);
       submitButton.textContent = "Request Buyer Planning Help";
       submitButton.disabled = false;
     }).catch(function () {
-      resetTurnstile();
+      resetRecaptcha();
       showStatus("Your request could not be sent. Please email Radu directly at radu.realtor@yahoo.com.", true);
       submitButton.textContent = "Request Buyer Planning Help";
       submitButton.disabled = false;

@@ -16,6 +16,7 @@ The implementation includes:
 - Exact CRM source: `Website - Buyer`.
 - Exact Top Producer type: `Buyer`.
 - Email and name required; phone optional unless visitor selects phone/text as their preferred contact method.
+- Phone input uses an explicit 10-digit U.S. example, formats the entry as the visitor types, and becomes required only when phone/text is selected.
 - SMS is **not enabled**: no SMS consent field or automated messaging behavior is included.
 - Email updates remain optional and unchecked.
 - Form sends only after a configured gateway endpoint and CAPTCHA site key are present.
@@ -25,13 +26,13 @@ The implementation includes:
 
 ```
 Buyer landing page (GitHub Pages)
-  → Cloudflare Turnstile + honeypot + client validation
+  → Google reCAPTCHA v2 checkbox + honeypot + client validation
   → separate Google Apps Script Website Lead Gateway
   → HTML metadata email to Top Producer @myleads intake
   → Top Producer source rule: Website - Buyer / Buyer
 ```
 
-The client never receives the Top Producer intake address or CAPTCHA secret. Gateway configuration is held in Apps Script Script Properties; the public page configuration includes only the deployed endpoint and Turnstile site key.
+The client never receives the Top Producer intake address or CAPTCHA secret. Gateway configuration is held in Apps Script Script Properties; the public page configuration includes only the deployed endpoint and Google reCAPTCHA site key.
 
 ## Design direction
 
@@ -39,7 +40,7 @@ The client never receives the Top Producer intake address or CAPTCHA secret. Gat
 **Core principles:** calm authority, focused intent, generous whitespace, transparent privacy.
 **Color philosophy:** deep navy signals professional judgment; muted gold marks the next action; warm off-white prevents a clinical form experience.
 **Layout:** a compact editorial information column alongside a clearly bounded form panel, collapsing to a single reading flow on mobile.
-**Signature elements:** a gold rule, property-line motif, and restrained navy form card.
+**Signature elements:** the existing `radu-muresan-mark.png` logo beside the broker name, a gold rule, property-line motif, and restrained navy form card.
 **Interaction:** no distracting animation; visible focus states and concise inline validation.
 **Typography:** DM Serif Display for headings; Source Sans 3 for readable form controls and body copy.
 **Brand essence:** personal Chicago-area buyer guidance that starts with a practical next step.
@@ -53,10 +54,10 @@ The client never receives the Top Producer intake address or CAPTCHA secret. Gat
 | `privacy.html` | Form-path Privacy Notice draft. |
 | `assets/lead-form.css` | Page-specific responsive styles. |
 | `assets/lead-form-config.js` | Public, non-secret gateway configuration; blank values keep submission disabled. |
-| `assets/lead-form.js` | Client validation, UTM capture, Turnstile interaction, and no-CORS submission. |
+| `assets/lead-form.js` | Client validation, UTM capture, Google reCAPTCHA interaction, and no-CORS submission. |
 | `integrations/Website_Lead_Gateway.gs` | Server-side validation, CAPTCHA verification, rate limiting, and CRM metadata email. |
 | `integrations/README.md` | Deployment/configuration instructions and controlled-test checklist. |
 
 ## Constraints
 
-The brokerage identity, mailing address, final Privacy Notice details, and public gateway/CAPTCHA values are not yet confirmed. This branch must **not** be merged or linked from campaign CTAs until those settings are complete and the controlled CRM test passes.
+The brokerage identity, mailing address, final Privacy Notice details, and public gateway/CAPTCHA values are not yet confirmed. The source/type controlled CRM test passed on October 8, 2026 and its test contact was deleted. This branch must **not** be merged or linked from campaign CTAs until the remaining disclosures are complete and the response-rule/task-plan behavior is separately confirmed.
