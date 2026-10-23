@@ -66,6 +66,7 @@
     selling: "Selling a Home",
     investing: "Investment Property",
     "first-time": "First-Time Buyer",
+    renting: "Renting (landlord or tenant)",
     other: "Other"
   };
 
