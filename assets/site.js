@@ -88,7 +88,7 @@
     success.classList.toggle("hidden", !on);
     if (on) {
       success.focus({ preventScroll: true });
-      success.scrollIntoView({ behavior: "smooth", block: "center" });
+      success.scrollIntoView({ behavior: "smooth", block: "start" }); // scroll-margin keeps it below the fixed nav
     }
   }
   document.getElementById("contact-again").addEventListener("click", function () {
