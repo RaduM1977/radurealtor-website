@@ -22,8 +22,10 @@
 - [Home](https://radurealtor.com/): services, neighborhoods, client reviews and contact form
 - [About Radu G. Muresan](https://radurealtor.com/about): experience, license, service areas and languages
 - [FAQ](https://radurealtor.com/faq): commissions, attorney review, condos, seller disclosures, first-time buyer programs, short sales
-- [Neighborhoods](https://radurealtor.com/#neighborhoods): Uptown and Edgewater overviews
-- [Romanian community](https://radurealtor.com/#community): servicii imobiliare în limba română
+- [Uptown guide](https://radurealtor.com/uptown): boundaries, ZIP codes, CTA stations, housing and buyer tips
+- [Edgewater guide](https://radurealtor.com/edgewater): boundaries, ZIP codes, CTA stations, housing and buyer tips
+- [Foreclosures & short sales](https://radurealtor.com/foreclosures-short-sales): how foreclosure, reinstatement, redemption and short sales work in Illinois
+- [Pagina în limba română](https://radurealtor.com/ro): servicii imobiliare în limba română
 - [Buyer planning request](https://radurealtor.com/buyer-planning.html): request a personal buyer consultation
 - [Privacy notice](https://radurealtor.com/privacy.html)
 
