@@ -154,6 +154,12 @@
     phone.value = formatPhone(phone.value);
     if (cursorAtEnd) phone.setSelectionRange(phone.value.length, phone.value.length);
   });
+  // Budget goes to Top Producer's max-price field: whole dollars, digits only
+  form.elements.budget.addEventListener("input", function () {
+    var budget = form.elements.budget;
+    var cleaned = budget.value.replace(/\D/g, "").slice(0, 12);
+    if (cleaned !== budget.value) budget.value = cleaned;
+  });
   updatePhoneRequirement();
 
   form.addEventListener("submit", function (event) {

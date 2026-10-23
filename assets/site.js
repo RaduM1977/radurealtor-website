@@ -81,6 +81,42 @@
     status.style.color = ok ? "" : "#fca5a5";
   }
 
+  // Phone: digits only, formatted as (312) 555-0123, same rules as the buyer form
+  var phone = form.elements.phone;
+  function phoneDigits(value) {
+    var digits = String(value || "").replace(/\D/g, "");
+    return digits.length === 11 && digits.charAt(0) === "1" ? digits.slice(1) : digits;
+  }
+  function formatPhone(value) {
+    var digits = phoneDigits(value).slice(0, 10);
+    if (digits.length < 4) return digits;
+    if (digits.length < 7) return "(" + digits.slice(0, 3) + ") " + digits.slice(3);
+    return "(" + digits.slice(0, 3) + ") " + digits.slice(3, 6) + "-" + digits.slice(6);
+  }
+  phone.addEventListener("input", function () {
+    var cursorAtEnd = phone.selectionStart === phone.value.length;
+    phone.value = formatPhone(phone.value);
+    if (cursorAtEnd) phone.setSelectionRange(phone.value.length, phone.value.length);
+  });
+
+  function validationError() {
+    var fields = form.elements;
+    [fields.name, fields.phone, fields.message].forEach(function (f) { f.removeAttribute("aria-invalid"); });
+    if (!fields.name.value.trim()) {
+      fields.name.setAttribute("aria-invalid", "true"); fields.name.focus();
+      return "Please enter your name.";
+    }
+    if (fields.phone.value.trim() && phoneDigits(fields.phone.value).length !== 10) {
+      fields.phone.setAttribute("aria-invalid", "true"); fields.phone.focus();
+      return "Please enter a 10-digit U.S. phone number, for example (312) 555-0123, or leave the phone field empty.";
+    }
+    if (!fields.message.value.trim()) {
+      fields.message.setAttribute("aria-invalid", "true"); fields.message.focus();
+      return "Please enter a message.";
+    }
+    return "";
+  }
+
   // Google reCAPTCHA v2 checkbox (same site key as the buyer-planning page)
   var recaptchaToken = "";
   var widgetId = null;
@@ -109,6 +145,11 @@
     event.preventDefault();
     if (!config.endpoint || !config.recaptchaSiteKey) {
       showStatus("The form is unavailable right now. Please call (773) 860-7617 or email radu.realtor@yahoo.com.", false);
+      return;
+    }
+    var problem = validationError();
+    if (problem) {
+      showStatus(problem, false);
       return;
     }
     if (!recaptchaToken) {
