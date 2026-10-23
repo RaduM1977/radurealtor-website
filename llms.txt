@@ -20,6 +20,8 @@
 
 ## Pages
 - [Home](https://radurealtor.com/): services, neighborhoods, client reviews and contact form
+- [About Radu G. Muresan](https://radurealtor.com/about): experience, license, service areas and languages
+- [FAQ](https://radurealtor.com/faq): commissions, attorney review, condos, seller disclosures, first-time buyer programs, short sales
 - [Neighborhoods](https://radurealtor.com/#neighborhoods): Uptown and Edgewater overviews
 - [Romanian community](https://radurealtor.com/#community): servicii imobiliare în limba română
 - [Buyer planning request](https://radurealtor.com/buyer-planning.html): request a personal buyer consultation

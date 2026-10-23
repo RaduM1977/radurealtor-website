@@ -71,6 +71,7 @@
   };
 
   var form = document.getElementById("contact-form");
+  if (!form) return; // pages without the contact form (about, faq)
   var status = document.getElementById("contact-status");
   var button = form.querySelector("button[type=submit]");
 
