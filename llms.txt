@@ -7,7 +7,7 @@
 - Membership: National Association of Realtors (NAR)
 - Languages: English, Romanian
 - Focus areas: Uptown (ZIP 60640, 60613) and Edgewater (ZIP 60660, 60640) on Chicago's lakefront
-- Also serving: West Ridge, Rogers Park, Albany Park, Irving Park, Lincoln Square, Lake View, Norwood Park and Jefferson Park (Chicago); Skokie, Niles, Park Ridge, Des Plaines, Wilmette, Arlington Heights and Naperville (suburbs); and greater Chicagoland
+- Also serving: West Ridge, Rogers Park, Albany Park, Irving Park, Lincoln Square, Lake View, Norwood Park and Jefferson Park (Chicago); Skokie, Niles, Morton Grove, Park Ridge, Des Plaines, Mount Prospect, Wilmette, Arlington Heights and Naperville (suburbs); and greater Chicagoland
 - Property types: condos, townhomes, single-family homes, multi-family buildings and commercial property, including foreclosures and short sales
 - Track record: more than 275 sales and leases since 2004 (MLS), including more than 70 in Edgewater and nearly 40 foreclosure and short sale transactions
 - Commissions: negotiable and agreed in writing before listing
@@ -26,6 +26,10 @@
 - [FAQ](https://radurealtor.com/faq): commissions, attorney review, condos, seller disclosures, first-time buyer programs, short sales
 - [Uptown guide](https://radurealtor.com/uptown): boundaries, ZIP codes, CTA stations, housing and buyer tips
 - [Edgewater guide](https://radurealtor.com/edgewater): boundaries, ZIP codes, CTA stations, housing and buyer tips
+- [West Ridge & Rogers Park guide](https://radurealtor.com/west-ridge-rogers-park)
+- [Irving Park, Albany Park & Lincoln Square guide](https://radurealtor.com/irving-park-albany-park-lincoln-square)
+- [Skokie, Niles, Park Ridge & Morton Grove guide](https://radurealtor.com/skokie-niles-park-ridge-morton-grove)
+- [Des Plaines & Mount Prospect guide](https://radurealtor.com/des-plaines-mount-prospect)
 - [Foreclosures & short sales](https://radurealtor.com/foreclosures-short-sales): how foreclosure, reinstatement, redemption and short sales work in Illinois
 - [Pagina în limba română](https://radurealtor.com/ro): servicii imobiliare în limba română
 - [Buyer planning request](https://radurealtor.com/buyer-planning.html): request a personal buyer consultation
