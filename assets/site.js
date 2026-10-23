@@ -58,10 +58,9 @@
   window.addEventListener("scroll", updateActive, { passive: true });
   updateActive();
 
-  // Contact form: same destinations as the previous site (HubSpot form + Web3Forms copy)
-  var HUBSPOT_URL = "https://api.hsforms.com/submissions/v3/integration/submit/246248752/8f774b7e-ff82-44ad-b5a2-a879f6566436";
-  var WEB3FORMS_KEY = "92f27588-5354-4749-8da6-e99a165d9b38";
-  var CC_EMAIL = "radu.muresan@myleads.io";
+  // Contact form: sent through the Website Lead Gateway (Google Apps Script) to
+  // Top Producer, like the buyer-planning form. The CRM address stays server-side.
+  var config = window.WEBSITE_LEAD_FORM_CONFIG || {};
   var INTEREST = {
     buying: "Buying a Home",
     selling: "Selling a Home",
@@ -82,57 +81,85 @@
     status.style.color = ok ? "" : "#fca5a5";
   }
 
+  // Google reCAPTCHA v2 checkbox (same site key as the buyer-planning page)
+  var recaptchaToken = "";
+  var widgetId = null;
+
+  function renderRecaptcha(attempt) {
+    if (!config.recaptchaSiteKey) return;
+    if (!window.grecaptcha || !window.grecaptcha.render) {
+      if (attempt < 40) window.setTimeout(function () { renderRecaptcha(attempt + 1); }, 250);
+      return;
+    }
+    widgetId = window.grecaptcha.render("contact-recaptcha", {
+      sitekey: config.recaptchaSiteKey,
+      theme: "dark",
+      callback: function (token) { recaptchaToken = token; status.classList.add("hidden"); },
+      "expired-callback": function () { recaptchaToken = ""; showStatus("Spam protection expired. Please check the box again.", false); },
+      "error-callback": function () { recaptchaToken = ""; showStatus("Spam protection could not load. Please call (773) 860-7617 or email radu.realtor@yahoo.com.", false); }
+    });
+  }
+  renderRecaptcha(0);
+
+  function utm(key) {
+    return new URLSearchParams(window.location.search).get(key) || "direct";
+  }
+
   form.addEventListener("submit", function (event) {
     event.preventDefault();
-    var data = new FormData(form);
-    var name = String(data.get("name") || "").trim();
-    var parts = name.split(/\s+/);
-    var interest = INTEREST[data.get("interest")] || data.get("interest");
-    var phone = String(data.get("phone") || "").trim();
-    var message = String(data.get("message") || "").trim();
+    if (!config.endpoint || !config.recaptchaSiteKey) {
+      showStatus("The form is unavailable right now. Please call (773) 860-7617 or email radu.realtor@yahoo.com.", false);
+      return;
+    }
+    if (!recaptchaToken) {
+      showStatus("Please complete the spam-protection check before sending.", false);
+      return;
+    }
 
-    var hubspot = {
-      fields: [
-        { name: "firstname", value: parts[0] || "" },
-        { name: "lastname", value: parts.slice(1).join(" ") },
-        { name: "email", value: data.get("email") },
-        { name: "phone", value: phone },
-        { name: "message", value: "Interest: " + interest + "\n\n" + message }
-      ],
-      context: { pageUri: "https://radurealtor.com", pageName: "Radu G. Muresan - Contact" }
-    };
-    var web3 = {
-      access_key: WEB3FORMS_KEY,
-      subject: "New Lead from radurealtor.com",
-      from_name: name,
-      name: name,
-      email: data.get("email"),
-      phone: phone || "Not provided",
-      interest: interest,
-      message: message,
-      ccemail: CC_EMAIL
+    var data = new FormData(form);
+    var choice = data.get("interest");
+    var payload = {
+      form: "homepage-contact",
+      source: "Website - Contact",
+      type: choice === "selling" ? "Seller" : "Buyer",
+      interest: INTEREST[choice] || choice,
+      name: String(data.get("name") || "").trim(),
+      email: String(data.get("email") || "").trim(),
+      phone: String(data.get("phone") || "").trim(),
+      contactMethod: "email",
+      message: String(data.get("message") || "").trim(),
+      honeypot: String(data.get("website") || "").trim(),
+      recaptchaToken: recaptchaToken,
+      emailUpdates: "no",
+      landingPage: window.location.pathname,
+      privacyNoticeVersion: config.privacyNoticeVersion,
+      language: document.documentElement.lang || "en",
+      utmSource: utm("utm_source"),
+      utmMedium: utm("utm_medium"),
+      utmCampaign: utm("utm_campaign"),
+      utmContent: new URLSearchParams(window.location.search).get("utm_content") || "not provided"
     };
 
     button.disabled = true;
     status.classList.add("hidden");
 
-    function post(url, body, extraHeaders) {
-      var headers = { "Content-Type": "application/json" };
-      if (extraHeaders) headers.Accept = "application/json";
-      return fetch(url, { method: "POST", headers: headers, body: JSON.stringify(body) })
-        .then(function (r) { return r.ok; })
-        .catch(function () { return false; });
-    }
-
-    Promise.all([post(HUBSPOT_URL, hubspot), post("https://api.web3forms.com/submit", web3, true)])
-      .then(function (results) {
-        if (results[0] || results[1]) {
-          form.reset();
-          showStatus("Thank you! Your message has been sent. I'll get back to you shortly.", true);
-        } else {
-          showStatus("Sorry, your message could not be sent. Please call (773) 860-7617 or email radu.realtor@yahoo.com.", false);
-        }
-      })
-      .then(function () { button.disabled = false; });
+    // Apps Script web apps send no CORS headers, so the response can't be read;
+    // a completed request means it was handed to the gateway for processing.
+    fetch(config.endpoint, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).then(function () {
+      form.reset();
+      showStatus("Thank you! Your message has been sent. I'll get back to you shortly.", true);
+    }).catch(function () {
+      showStatus("Sorry, your message could not be sent. Please call (773) 860-7617 or email radu.realtor@yahoo.com.", false);
+    }).then(function () {
+      recaptchaToken = "";
+      if (widgetId !== null && window.grecaptcha) window.grecaptcha.reset(widgetId);
+      button.disabled = false;
+    });
   });
 })();
