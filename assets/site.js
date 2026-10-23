@@ -78,8 +78,24 @@
     status.textContent = message;
     status.classList.remove("hidden");
     status.classList.toggle("text-[#C9A84C]", ok);
-    status.style.color = ok ? "" : "#fca5a5";
+    status.classList.toggle("is-error", !ok);
   }
+
+  // After a successful send the form is replaced by a confirmation panel
+  var success = document.getElementById("contact-success");
+  function showSuccess(on) {
+    form.classList.toggle("hidden", on);
+    success.classList.toggle("hidden", !on);
+    if (on) {
+      success.focus({ preventScroll: true });
+      success.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+  document.getElementById("contact-again").addEventListener("click", function () {
+    status.classList.add("hidden");
+    showSuccess(false);
+    form.elements.name.focus();
+  });
 
   // Phone: digits only, formatted as (312) 555-0123, same rules as the buyer form
   var phone = form.elements.phone;
@@ -194,7 +210,7 @@
       keepalive: true
     }).then(function () {
       form.reset();
-      showStatus("Thank you! Your message has been sent. I'll get back to you shortly.", true);
+      showSuccess(true);
     }).catch(function () {
       showStatus("Sorry, your message could not be sent. Please call (773) 860-7617 or email radu.realtor@yahoo.com.", false);
     }).then(function () {
